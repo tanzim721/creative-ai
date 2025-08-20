@@ -6,10 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
 class Subuser extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,24 +19,11 @@ class Subuser extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'parent_user_id',
-        'name',
-        'email',
-        'mobile',
-        'position',
-        'password',
-        'is_active',
-        'verification_token',
+        'parent_user_id', 'name', 'email', 'mobile', 'position', 'password', 'is_active'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
-        'verification_token',
+        'password', 'remember_token',
     ];
 
     /**
@@ -44,7 +33,6 @@ class Subuser extends Authenticatable
      */
     protected $casts = [
         'is_active' => 'boolean',
-        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -62,5 +50,21 @@ class Subuser extends Authenticatable
     public function isActive()
     {
         return $this->is_active;
+    }
+
+    // Inherit parent user's properties when needed
+    public function getCompanyNameAttribute()
+    {
+        return $this->parentUser->company_name;
+    }
+
+    public function getCompanyAddressAttribute()
+    {
+        return $this->parentUser->company_address;
+    }
+
+    public function getStripeCustomerIdAttribute()
+    {
+        return $this->parentUser->stripe_customer_id;
     }
 }

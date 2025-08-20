@@ -932,15 +932,9 @@
         </form>
 
         <label>AI Response: </label>
-        @isset($aiText)
             <div class="alert alert-success">
-                {{ $aiText }}
+                {{ isset($data['data']) ? $data['data'] : ($data ?? 'No response yet.') }}
             </div>
-        @else
-            <div class="alert alert-info">
-                No response generated yet.
-            </div>
-        @endisset
     </div>
 
 

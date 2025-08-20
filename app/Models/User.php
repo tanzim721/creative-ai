@@ -106,6 +106,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Subuser::class, 'parent_user_id');
     }
 
+    public function activeSubusers()
+    {
+        return $this->hasMany(Subuser::class, 'parent_user_id')->where('is_active', true);
+    }
+
     public function creatives()
     {
         return $this->hasMany(Creative::class);

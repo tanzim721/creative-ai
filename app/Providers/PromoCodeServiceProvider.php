@@ -32,12 +32,12 @@ class PromoCodeServiceProvider extends ServiceProvider
             }
             
             // Get the active promo code from the database
-            $activeCode = PromoCode::valid()->first()?->code;
+            // $activeCode = PromoCode::valid()->first()?->code;
             
-            if ($activeCode) {
-                // Set the active code in the auth config
-                config(['auth.defaults.admin_code' => $activeCode]);
-            }
+            // if ($activeCode) {
+            //     // Set the active code in the auth config
+            //     config(['auth.defaults.admin_code' => $activeCode]);
+            // }
         } catch (\Exception $e) {
             // If there's any issue (like during migrations), just continue with the default
             report($e);

@@ -15,18 +15,12 @@ use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
         $plans = Plan::where('is_active', 1)->get();
-
-        $mongpTestdata = DB::connection('mongodb')->collection('test')->get();
-dd($mongpTestdata);
-
-
         return view('welcome', compact('plans'));
     }
     public function textGenerate(Request $request)
@@ -53,10 +47,9 @@ dd($mongpTestdata);
         ])->json();
 
         $aiText = $response['candidates'][0]['content']['parts'][0]['text'] ?? 'No response from AI';
-        
+
         return view('welcome', [
-            'plans' => Plan::where('is_active', 1)->get(),
-            'data' => ['data' => $aiText]
+            'aiText' => $aiText
         ]);
     }
 

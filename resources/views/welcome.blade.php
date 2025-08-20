@@ -767,6 +767,7 @@
                 </h2>
             </div>
             <div class="row">
+                @isset($plans)
                 @foreach ($plans as $plan)
                     <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-duration="600">
                         <div class="plan-box text-center bg-dark-black">
@@ -791,6 +792,7 @@
                         </div>
                     </div>
                 @endforeach
+                @endisset
             </div>
         </div>
     </section>
